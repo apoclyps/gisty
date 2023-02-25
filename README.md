@@ -4,26 +4,28 @@
 
 ## Prerequisites
 
-You will need to install the following dependency on your host to use `diesel`:
+Depends on `openssl@1.1` to be installed and added to the `LD_LIBRARY_PATH`
 
 ```bash
-sudo apt-get install libpq-dev
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/linuxbrew/.linuxbrew/opt/openssl@1.1/lib
 ```
 
-## Setting up the database
+## Deployment
 
-To get started with Diesel, I recommend visiting the [getting started](https://diesel.rs/guides/getting-started.html) page to understand the context behind the commands.
-
-### Applying migrations
+If you wish to deploy the latest commit:
 
 ```bash
-diesel migration run
+cargo shuttle deploy
 ```
 
-## Installing `gisty`
+If you have unstaged changes you can append the `--allow-dirty` flag to the command.
 
-To build and install `rustflix` on your path, run the following command:
+## Example Requests
 
 ```bash
-cargo build && cargo install --path .
+echo "HELP" | curl --data-binary @- https://gisty.shuttleapp.rs/
+```
+
+```bash
+curl https://gisty.shuttleapp.rs/{id}
 ```

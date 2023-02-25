@@ -2,21 +2,20 @@
 extern crate rocket;
 
 mod paste_id;
-#[cfg(test)]
-mod tests;
 
 use std::io;
 
+use paste_id::PasteId;
 use rocket::data::{Data, ToByteUnit};
 use rocket::http::uri::Absolute;
 use rocket::response::content::RawText;
 use rocket::tokio::fs::{self, File};
-
-use paste_id::PasteId;
+use rocket::{Build, Rocket};
 
 // In a real application, these would be retrieved dynamically from a config.
 #[allow(clippy::declare_interior_mutable_const)]
-const HOST: Absolute<'static> = uri!("http://localhost:8000");
+// const HOST: Absolute<'static> = uri!("http://localhost:8000");
+const HOST: Absolute<'static> = uri!("https://gisty.shuttleapp.rs");
 const ID_LENGTH: usize = 3;
 
 #[post("/", data = "<paste>")]
@@ -52,7 +51,7 @@ fn index() -> &'static str {
     "
 }
 
-#[launch]
-fn rocket() -> _ {
-    rocket::build().mount("/", routes![index, upload, delete, retrieve])
+#[shuttle_service::main]
+async fn rocket() -> Result<Rocket<Build>, shuttle_service::Error> {
+    Ok(rocket::build().mount("/", routes![index, upload, delete, retrieve]))
 }

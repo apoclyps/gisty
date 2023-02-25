@@ -3,6 +3,7 @@ use std::path::{Path, PathBuf};
 
 use rand::{self, Rng};
 use rocket::request::FromParam;
+use std::fs;
 
 /// A _probably_ unique paste ID.
 #[derive(UriDisplayPath)]
@@ -27,7 +28,13 @@ impl PasteId<'_> {
 
     /// Returns the path to the paste in `upload/` corresponding to this ID.
     pub fn file_path(&self) -> PathBuf {
-        let root = concat!(env!("CARGO_MANIFEST_DIR"), "/", "upload");
+        let root: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/", "upload");
+
+        let path: PathBuf = PathBuf::from(root);
+
+        // create the directory if it doesn't exist
+        fs::create_dir_all(path).unwrap();
+
         Path::new(root).join(self.0.as_ref())
     }
 }

@@ -17,3 +17,8 @@ Cargo.lock
 # Uploads
 
 upload/**/*
+
+
+# IDE
+.vscode
+.idea
