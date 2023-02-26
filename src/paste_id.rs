@@ -5,7 +5,6 @@ use rand::{self, Rng};
 use rocket::request::FromParam;
 use std::fs;
 
-/// A _probably_ unique paste ID.
 #[derive(UriDisplayPath)]
 pub struct PasteId<'a>(Cow<'a, str>);
 

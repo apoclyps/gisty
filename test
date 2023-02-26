@@ -1,8 +1,0 @@
-eval "$(pyenv init -)"
-eval "$(pyenv init --path)"
-
-CONFIGURE_OPTS="--with-openssl=$(brew --prefix openssl)" pyenv install 3.11.0
-
-CFLAGS=-I/usr/local/opt/openssl/include
-CPPFLAGS=-I/usr/local/opt/openssl/include
-LDFLAGS=-L/usr/local/opt/openssl/lib
