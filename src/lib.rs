@@ -16,6 +16,8 @@ use rocket::serde::{json::Json, Serialize};
 use rocket::tokio::fs::File;
 use rocket::{Build, Rocket};
 
+pub mod routes;
+
 // In a real application, these would be retrieved dynamically from a config.
 #[allow(clippy::declare_interior_mutable_const)]
 const HOST: Absolute<'static> = uri!("https://gisty.shuttleapp.rs");
@@ -76,15 +78,39 @@ fn index() -> &'static str {
       POST /
           accepts raw data in the body of the request and responds with a URL of
           a page containing the body's content
-          EXAMPLE: curl --data-binary @file.txt http://localhost:8000
+
+          Example: curl --data-binary @file.txt http://localhost:8000
+
       GET /<id>
           retrieves the content for the paste with id `<id>`
+
+          Example: curl http://localhost:8000/abc
+
       GET /all
           retrieves all the paste ids from the upload directory
+
+          Example: curl http://localhost:8000/all
+
+      GET /health
+          returns 'Ok' if the service is running
+
+          Example: curl http://localhost:8000/health
     "
 }
 
 #[shuttle_service::main]
 async fn rocket() -> Result<Rocket<Build>, shuttle_service::Error> {
-    Ok(rocket::build().mount("/", routes![index, upload, delete, retrieve, all]))
+    Ok(rocket::build()
+        .mount(
+            "/",
+            routes![
+                index,
+                upload,
+                delete,
+                retrieve,
+                all,
+                routes::health::health_route
+            ],
+        )
+        .mount("/api", routes![all]))
 }
