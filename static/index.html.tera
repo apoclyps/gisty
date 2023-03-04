@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gisty</title>
+    <meta name="description" content="A gist application written in Rocket." />
+    <meta name="author" content="Kyle Harrison" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <h4>Gisty</h4>
+        <p>
+          A Web application that allows for storage and editing of markdown
+          snippets.Z
+        </p>
+      </div>
+
+      <div class="row">
+        <div class="twelve columns">
+          <ul>
+            <li><a href="/gists">Gists</a></li>
+            <li><a href="/gists/new">New Gist</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
